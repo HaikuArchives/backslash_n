@@ -4,6 +4,8 @@
 #include <SupportDefs.h>
 #include <GraphicsDefs.h>
 
+#include <Directory.h>
+
 class dPalette
 {
 public:

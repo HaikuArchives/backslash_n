@@ -31,6 +31,8 @@ private:
 	int32 current_part;
 	static int32 main_thread(void *parameter);
 	dScreen *screen;
+	
+	parameter param;
 
 
 // ––––––––––––––––––––––-

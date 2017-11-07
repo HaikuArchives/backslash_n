@@ -235,7 +235,8 @@ int32 dApp::main_thread(void *parameter)
 				rgb_color col = {0,0,0,0};
 				dPalette tmp = blue_palette->Mix(col,1.0 - (time-part_start)/5.0);
 				cut_scene->Render(frame1,time);
-				screen->WaitVbl();
+				//screen->WaitVbl();
+				snooze(20000);
 				screen->SetPalette(&tmp);
 
 				time = ((float)(system_time() - start_time))/1000000.0;
@@ -644,7 +645,8 @@ int32 dApp::main_thread(void *parameter)
 				rgb_color col = {255,255,255,0};
 				dPalette tmp = blue_palette->Mix(col,1.0 - (time-part_start)/3.0);
 				cut_scene->Render(frame1,time);
-				screen->WaitVbl();
+				//screen->WaitVbl();
+				snooze(20000);
 				screen->SetPalette(&tmp);
 
 				time = ((float)(system_time() - start_time))/1000000.0;
@@ -658,7 +660,8 @@ int32 dApp::main_thread(void *parameter)
 				rgb_color col = {0,0,0,0};
 				dPalette tmp = blue_palette->Mix(col,(time-part_start)/7.0);
 				cut_scene->Render(frame1,time);
-				screen->WaitVbl();
+				//screen->WaitVbl();
+				snooze(20000);
 				screen->SetPalette(&tmp);
 
 				time = ((float)(system_time() - start_time))/1000000.0;
@@ -731,7 +734,7 @@ dApp::dApp():BApplication("application/x-vnd.Linefeed-demo"),stsp()
 	screen->SetPalette(p);
 	screen->Show();
 
-	parameter param;
+
 	param.screen = screen;
 	param.app = this;
 	thread = spawn_thread(main_thread,"main_thread",B_NORMAL_PRIORITY,(void*)&param);
