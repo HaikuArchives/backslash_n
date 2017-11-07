@@ -4,6 +4,7 @@
 #include <Alert.h>
 #include <stdlib.h>
 #include <StorageDefs.h>
+#include <Roster.h>
 
 #include "dScreen.h"
 #include "dContourObject.h"
@@ -212,6 +213,8 @@ int32 dApp::main_thread(void *parameter)
 	screen->SetPalette(blue_palette);
 
 // START!
+	app->Start();
+
 	uint16 frames = 0;
 
 	bigtime_t start_time = system_time();
@@ -225,9 +228,6 @@ int32 dApp::main_thread(void *parameter)
 		switch (app->CurrentPart())
 		{
 		case 0:// PART ************* LOGO
-			app->SetPos(0);
-			app->Start();
-//			printf("start\n");
 			part_start = time;
 			do
 			{
@@ -670,8 +670,6 @@ int32 dApp::main_thread(void *parameter)
 				snooze(10000);
 			} while ( (resume = screen->Draw(frame1)) && app->CurrentPart() == 17);
 			if (!resume) return 0;
-			app->Stop();
-//			printf("stop\n");
 		break;
 		case 18:
 			screen->SetPalette(red_palette);
@@ -689,12 +687,9 @@ int32 dApp::main_thread(void *parameter)
 			} while ( (resume = screen->Draw(frame1)) && app->CurrentPart() == 18);
 			if (!resume) return 0;
 		break;
-		case 19:
-			app->current_part = 0;
-			break;
 		}
 
-		} while (true);
+		} while (app->CurrentPart() < 19);
 
 	be_app->PostMessage(B_QUIT_REQUESTED);
 	while (screen->Draw(frame1)); // the screen class has to know that we know it wants to quit
@@ -731,7 +726,7 @@ dApp::dApp():BApplication("application/x-vnd.Linefeed-demo"),stsp()
 	}
 
 
-	screen = new dScreen("\\n - released at Midwinter 00, by linefeed");
+	screen = new dScreen("demo",&error);
 	if ( error != B_OK ) PostMessage(B_QUIT_REQUESTED);
 	screen->SetPalette(p);
 	screen->Show();
@@ -747,6 +742,8 @@ dApp::dApp():BApplication("application/x-vnd.Linefeed-demo"),stsp()
 
 dApp::~dApp()
 {
+	Stop();
+	
 	delete part1;
 	delete part2;
 	delete cubes_scene;

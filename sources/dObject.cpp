@@ -103,10 +103,7 @@ _EXPORT dObject::~dObject()
 {
 	// delete all the polygons
 	while (polygon_count > 0)
-	{
-		polygon_count--;
-		delete polygon[polygon_count];
-	}
+		delete polygon[--polygon_count];
 	if (polygon) delete []polygon;
 
 	if (normals) delete []normals;

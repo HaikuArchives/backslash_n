@@ -8,10 +8,10 @@
 #include "dBitmap.h"
 #include "dPalette.h"
 
-class dScreen: public BWindow
+class dScreen: public BWindowScreen
 {
 public:
-	dScreen(const char *title);
+	dScreen(const char *title,status_t *error);
 	virtual ~dScreen();
 	bool Draw(dBitmap *buffer);
 	void SetPalette(dPalette *p);
@@ -22,21 +22,19 @@ public:
 	virtual bool QuitRequested();
 private:
 	BScreen *screen; // the BScreen object, used for monitor beam sync
-	BView *view; // the view that draws everything.
-	BBitmap *offscreen_bitmap; // a bitmap
 
-	dPalette *current_palette; // a pointer to the current palette
-
-	rgb_color *screen_base;
-
+	dColor *screen_base;
+	dColor clear_color;
 	sem_id disconnected; // is locked when the screen is disconnected
 	sem_id ready_to_quit; // is released when the screen can delete itself
 	bool quitting; // is true when the screen wants to quit
+
+	virtual void ScreenConnected(bool connected);
 };
 
 inline void dScreen::SetPalette(dPalette *p)
 {
-	if (!quitting) current_palette = p;
+	if (!quitting) SetColorList(p->Bits(), 0, 255);
 }
 
 inline void dScreen::WaitVbl()
