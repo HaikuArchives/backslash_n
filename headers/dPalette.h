@@ -25,8 +25,9 @@ public:
 	void Add(uint8 r, uint8 g, uint8 b);
 	void Sub(uint8 r, uint8 g, uint8 b);
 
-private:
 	rgb_color palette[256];
+
+private:
 };
 
 #include "dColor.h"

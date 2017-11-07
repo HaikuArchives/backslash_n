@@ -28,10 +28,11 @@ dPalette::dPalette(BDirectory *dir,const char *filename)
 	{
 		uint8 rgb[3];
 		file.Read((void*)rgb,3);
-		rgb_color color = {pow(rgb[0]/255.0,.8)*255,
-								pow(rgb[1]/255.0,.8)*255,
+		rgb_color color = {
 								pow(rgb[2]/255.0,.8)*255,
-								0};
+								pow(rgb[1]/255.0,.8)*255,
+								pow(rgb[0]/255.0,.8)*255
+								};
 		Set(c,color);
 	}
 }
